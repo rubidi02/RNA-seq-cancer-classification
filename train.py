@@ -3,6 +3,8 @@ import xgboost as xgb
 import pandas as pd
 import sklearn
 from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
 
 # Load ALL data
@@ -21,10 +23,29 @@ with open(all_labels_file_path, 'rb') as all_labels_pckl:
 print(all_data)
 print(all_labels)
 
+print(all_data[0])
+
 label_encoder = LabelEncoder()
 all_labels_encoded = label_encoder.fit_transform(all_labels[0].to_list())
-print(all_labels_encoded)
 
-xgb_cl = xgb.XGBClassifier()
-xgb_cl.fit(all_data.transpose(), all_labels_encoded)
+#Split dataset into training and testing sets
+all_data_train, all_data_test, all_labels_encoded_train, all_labels_encoded_test = train_test_split(all_data, all_labels_encoded, test_size=0.2, random_state=42)
 
+print("Training the model...")
+
+model_train = xgb.XGBClassifier()
+model_train.fit(all_data_train, all_labels_encoded_train)
+
+print("Done. Verifying accuracy...")
+
+# verify accuracy of the train data
+pred_train = model_train.predict(all_data_train)
+
+accuracy = accuracy_score(pred_train, all_labels_encoded_train)
+print("Accuracy of the train: %.1f%%" % (accuracy * 100.0))
+
+# verify accuracy of the test data
+pred_test = model_train.predict(all_data_test)
+
+accuracy = accuracy_score(pred_test, all_labels_encoded_test)
+print("Accuracy of the test: %.1f%%" % (accuracy * 100.0))

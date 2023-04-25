@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import pickle
+import numpy as np
 
 # Specify the path to the parent directory containing the folders to iterate through
 parent_dir = "../data/data-tcga"
@@ -32,7 +33,7 @@ if not os.path.exists(all_data_file_path):
     all_labels = []
 
     # Iterate through all folders in the parent directory
-    for folder in os.listdir(parent_dir):
+    for folder in os.listdir(parent_dir)[:100]:
         # Create the full path to the folder
         folder_path = os.path.join(parent_dir, folder)
         # Check if the item in the directory is a folder
@@ -85,11 +86,11 @@ if not os.path.exists(all_data_file_path):
                             counts.append(tpm)
                 #print(counts)
 
-                row_df = pd.DataFrame(counts)
+                row_df = pd.DataFrame(counts, dtype=np.float32)
                 all_data.append(row_df)
 
-    all_data = pd.concat(all_data, axis=1).transpose()
-    all_labels = pd.concat(all_labels, axis=0)
+    all_data = pd.concat(all_data, axis=1, ignore_index=True).transpose()
+    all_labels = pd.concat(all_labels, axis=0, ignore_index=True)
 
     # store the count matrices and labels into pickle files
     with open(all_data_file_path, 'wb') as all_data_pckl:
