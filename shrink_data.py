@@ -10,8 +10,8 @@ with open(all_labels_file_path, 'rb') as all_labels_pckl:
     all_labels = pickle.load(all_labels_pckl)
 
 # reduce the data so we can work with it more flexibly
-reduced_data = all_data[:100]
-reduced_labels = all_labels[:100]
+reduced_data = all_data
+reduced_labels = all_labels
 
 # save new reduced data to pickle for easier loading when trainin
 reduced_data_file_path = "reduced_data.pkl"

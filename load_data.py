@@ -33,7 +33,7 @@ if not os.path.exists(all_data_file_path):
     all_labels = []
 
     # Iterate through all folders in the parent directory
-    for folder in os.listdir(parent_dir)[:100]:
+    for folder in os.listdir(parent_dir):
         # Create the full path to the folder
         folder_path = os.path.join(parent_dir, folder)
         # Check if the item in the directory is a folder

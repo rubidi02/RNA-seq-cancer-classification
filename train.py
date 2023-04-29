@@ -33,7 +33,7 @@ all_data_train, all_data_test, all_labels_encoded_train, all_labels_encoded_test
 
 print("Training the model...")
 
-model_train = xgb.XGBClassifier()
+model_train : xgb.XGBClassifier = xgb.XGBClassifier()
 model_train.fit(all_data_train, all_labels_encoded_train)
 
 print("Done. Verifying accuracy...")
@@ -42,10 +42,16 @@ print("Done. Verifying accuracy...")
 pred_train = model_train.predict(all_data_train)
 
 accuracy = accuracy_score(pred_train, all_labels_encoded_train)
-print("Accuracy of the train: %.1f%%" % (accuracy * 100.0))
+print("Accuracy of the train: %.4f%%" % (accuracy * 100.0))
 
 # verify accuracy of the test data
 pred_test = model_train.predict(all_data_test)
 
 accuracy = accuracy_score(pred_test, all_labels_encoded_test)
-print("Accuracy of the test: %.1f%%" % (accuracy * 100.0))
+print("Accuracy of the test: %.4f%%" % (accuracy * 100.0))
+
+#saving the model for later use
+model_file_name = 'cancer_xgboost.model'
+
+with open(model_file_name, 'wb') as file_model:
+    pickle.dump(model_train, file_model)
