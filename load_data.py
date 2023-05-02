@@ -5,7 +5,7 @@ import numpy as np
 
 # Specify the path to the parent directory containing the folders to iterate through
 parent_dir = "../data/data-tcga"
-sample_sheet_file = "gdc_sample_sheet.2023-04-23.tsv"
+sample_sheet_file = "gdc_sample_sheet.2023-04-03.tsv"
 clinical_file = "clinical.tsv"
 all_data_file_path = "all_data.pkl"
 all_labels_file_path = "all_labels.pkl"
@@ -77,12 +77,10 @@ if not os.path.exists(all_data_file_path):
 
                             split_line = line.split('\t')
                             
-                            gene_id = split_line[0]
-                            # remove the suffix after the . in the gene ID
-                            gene_id = gene_id.split('.')[0]
+                            gene_name = split_line[1]
                             tpm = split_line[6]
-                            #row_json[gene_id] = tpm
-                            columns.append(gene_id)
+                            #row_json[gene_name] = tpm
+                            columns.append(gene_name)
                             counts.append(tpm)
                 #print(counts)
 
@@ -90,6 +88,7 @@ if not os.path.exists(all_data_file_path):
                 all_data.append(row_df)
 
     all_data = pd.concat(all_data, axis=1, ignore_index=True).transpose()
+    all_data.columns = columns
     all_labels = pd.concat(all_labels, axis=0, ignore_index=True)
 
     # store the count matrices and labels into pickle files

@@ -16,6 +16,7 @@ reduced_labels = all_labels
 # save new reduced data to pickle for easier loading when trainin
 reduced_data_file_path = "reduced_data.pkl"
 reduced_labels_file_path = "reduced_labels.pkl"
+
 with open(reduced_data_file_path, 'wb') as reduced_data_pckl:
     pickle.dump(reduced_data, reduced_data_pckl)
 with open(reduced_labels_file_path, 'wb') as reduced_labels_pckl:
