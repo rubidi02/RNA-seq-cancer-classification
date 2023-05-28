@@ -1,2 +1,4 @@
 .DS_Store
-asdf
+venv
+*.pkl
+.ipynb_checkpoints/
