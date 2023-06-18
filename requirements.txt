@@ -6,3 +6,7 @@ mygene
 gtfparse
 polars
 matplotlib
+seaborn
+# cudatoolkit=11.8.0
+nvidia-cudnn-cu11==8.6.0.163
+tensorflow
